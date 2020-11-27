@@ -22,7 +22,8 @@ public class Exercise2_5 : MonoBehaviour
         // Create copys of our mover and add them to our list
         while (Movers.Count < 30)
         {
-            Vector3 moverSpawnPosition = moverSpawnTransform.position + Vector3.right * Random.Range(-7, 7);
+
+            Vector3 moverSpawnPosition = new Vector3(Random.Range(-7, 7), Random.Range(5,15), 0);
             Movers.Add(new Mover2_5(
                 moverSpawnPosition,
                 floorY
@@ -40,16 +41,18 @@ public class Exercise2_5 : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        Debug.Log("This is the fixed update");
         // Apply the forces to each of the Movers
         foreach (Mover2_5 mover in Movers)
         {
             // Check for interaction with any of our fluids
             foreach (Fluid2_5 fluid in Fluids)
             {
-                if (mover.IsInside(fluid))
+                if (mover.IsInside(fluid) == false)
                 {
                     // Apply a friction force that directly opposes the current motion
                     Vector3 friction = mover.body.velocity;
+                    Debug.Log("Is inside fluid");
 
                     friction.Normalize();
                     friction *= -fluid.dragCoefficient;
@@ -58,6 +61,7 @@ public class Exercise2_5 : MonoBehaviour
             }
 
             mover.CheckBoundaries();
+           // Debug.Log("Not inside the fluid");
         }
     }
 }
@@ -74,6 +78,7 @@ public class Mover2_5
     {
         this.yMin = yMin;
 
+       
         // Create the components required for the mover
         gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         body = gameObject.AddComponent<Rigidbody>();
@@ -86,6 +91,7 @@ public class Mover2_5
 
         // Place our mover at the specified spawn position relative
         // to the bottom of the sphere
+
         gameObject.transform.position = position + Vector3.up * radius;
 
         // The default diameter of the sphere is one unit
@@ -118,12 +124,15 @@ public class Mover2_5
             body.position.y < fluid.maxBoundary.y &&
             body.position.z > fluid.minBoundary.z &&
             body.position.z < fluid.maxBoundary.z)
+            
         {
             return true;
+            Debug.Log("Is inside fluid");
         }
         else
         {
             return false;
+            Debug.Log("Is not inside fluid");
         }
     }
 }
