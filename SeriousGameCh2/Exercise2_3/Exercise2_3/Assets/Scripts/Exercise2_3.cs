@@ -12,9 +12,11 @@ public class Exercise2_3 : MonoBehaviour
     public Transform moverSpawnTransform;
 
     private List<Mover2_2> Movers = new List<Mover2_2>();
-   
-    private Vector3 wind = new Vector3(.3f, 1f, 0f);
-    private Vector3 gravity = new Vector3(.0f, 0.4f, 0f);
+
+
+    private Vector3 wind; 
+    // private Vector3 gravity = new Vector3(.0f, 0.4f, 0f);
+    
 
     // Start is called before the first frame update
     void Start()
@@ -40,10 +42,11 @@ public class Exercise2_3 : MonoBehaviour
 
         foreach (Mover2_2 mover in Movers)
         {
+            wind = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
 
             mover.body.AddForce(wind, ForceMode.Impulse);
-
-            mover.body.AddForce(gravity, ForceMode.Force);
+            Debug.Log(wind);
+           // mover.body.AddForce(gravity, ForceMode.Force);
 
             mover.CheckBoundaries();
 
