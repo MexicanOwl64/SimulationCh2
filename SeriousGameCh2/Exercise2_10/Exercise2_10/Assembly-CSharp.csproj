@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Exercise2_10.cs" />
+    <Compile Include="Assets\Scripts\ObjectTest.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/gabri/OneDrive/Documents/GitHub/SimulationCh2/SeriousGameCh2/Exercise2_10/Exercise2_10/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

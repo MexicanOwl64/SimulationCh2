@@ -19,7 +19,7 @@ public class Exercise2_10 : MonoBehaviour
     void Start()
     {
         // Create copys of our mover and add them to our list
-        while (Movers.Count < 30)
+        while (Movers.Count < 10)
         {
             // Instantiate them at random vectors from the left to the right wall and from our floor to ceiling.
             moverSpawnTransform.position = new Vector2(UnityEngine.Random.Range(leftWallX, rightWallX), UnityEngine.Random.Range(floorY, ceilingY));
@@ -51,6 +51,10 @@ public class Exercise2_10 : MonoBehaviour
                     Vector2 attractedMover = Movers[j].attract(Movers[i].body);
                     //We then apply that force the Movers[i] with the Rigidbody's Addforce method
                     Movers[i].body.AddForce(attractedMover, ForceMode.Impulse);
+
+                    var v3T = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
+                    v3T = Camera.main.ScreenToWorldPoint(v3T);
+                    Movers[i].body.transform.position = v3T;
                 }
             }
             //Now we check the boundaries of our scene to make sure the movers don't fly off
@@ -113,7 +117,7 @@ public class Mover2_8
 
     public Vector2 attract(Rigidbody m)
     {
-        Vector2 force = body.position - m.position;
+        Vector2 force = body.position + m.position;
         float distance = force.magnitude;
 
         // Remember we need to constrain the distance so that our circle doesn't spin out of control
@@ -140,4 +144,3 @@ public class Mover2_8
         body.velocity = velocity;
     }
 }
-
